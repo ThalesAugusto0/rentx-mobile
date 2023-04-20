@@ -4,6 +4,10 @@ export const Container = styled.View`
   flex: 1;
   justify-content: center;
   align-items: center;
+  background-color: ${({ theme }) => theme.colors.backgroud_primary};
 `;
 
-export const Title = styled.Text``;
+export const Title = styled.Text`
+  font-family: ${({ theme }) => theme.fonts.secondery_600};
+  font-size: 30px;
+`;
