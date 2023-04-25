@@ -1,4 +1,14 @@
 import React from "react";
+import SpeedSvg from "../../assets/speed.svg";
+import AccelerationSvg from "../../assets/acceleration.svg";
+import ForceSvg from "../../assets/force.svg";
+import GasolineSvg from "../../assets/gasoline.svg";
+import ExchangeSvg from "../../assets/exchange.svg";
+import PeopleSvg from "../../assets/people.svg";
+import { BackButtton } from "../../components/BackButtton";
+import { ImageSlider } from "../../components/ImageSlider";
+import { Accessory } from "../../components/Accessory";
+import { Button } from "../../components/Button";
 
 import {
   Container,
@@ -14,16 +24,8 @@ import {
   Price,
   About,
   Acessories,
+  Footer,
 } from "./styles";
-import { BackButtton } from "../../components/BackButtton";
-import { ImageSlider } from "../../components/ImageSlider";
-import { Accessory } from "../../components/Accessory";
-import SpeedSvg from "../../assets/speed.svg";
-import AccelerationSvg from "../../assets/acceleration.svg";
-import ForceSvg from "../../assets/force.svg";
-import GasolineSvg from "../../assets/gasoline.svg";
-import ExchangeSvg from "../../assets/exchange.svg";
-import PeopleSvg from "../../assets/people.svg";
 
 export function CarDetails() {
   return (
@@ -65,6 +67,10 @@ export function CarDetails() {
           para quem gosta de acelerar
         </About>
       </Content>
+
+      <Footer>
+        <Button title="Confirmar" />
+      </Footer>
     </Container>
   );
 }
