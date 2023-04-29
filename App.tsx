@@ -11,7 +11,7 @@ import {
   Archivo_600SemiBold,
 } from "@expo-google-fonts/archivo";
 
-import { SchedulingDatails } from "./src/screens/SchedulingDatails";
+import { SchedulingComplete } from "./src/screens/SchedulingComplete";
 import { ThemeProvider } from "styled-components";
 import theme from "./src/styles/theme";
 import * as SplashScreen from "expo-splash-screen";
@@ -34,7 +34,7 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <SchedulingDatails />
+      <SchedulingComplete />
     </ThemeProvider>
   );
 }
