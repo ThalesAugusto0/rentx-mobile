@@ -1,27 +1,39 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import api from "../../service/api";
+import Logo from "../../assets/logo.svg";
+
 import { StatusBar } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import { Car } from "../../components/Car";
 import { Container, Header, TotalCars, HeaderContent, CarList } from "./styles";
-
-import Logo from "../../assets/logo.svg";
 import { useNavigation } from "@react-navigation/native";
+import { CarDTO } from "../../dtos/CarDTO";
+import { Load } from "../../components/Load";
 
 export function Home() {
+  const [cars, setCars] = useState<CarDTO[]>([]);
+  const [loading, setLoading] = useState(true);
+
   const navigation = useNavigation();
-  const carData = {
-    brand: "Audi",
-    name: "RS 5 Coupé",
-    rent: {
-      period: "Ao dia",
-      price: 350,
-    },
-    thumbnail: "https://freepngimg.com/thumb/audi/35227-5-audi-rs5-red.png",
-  };
 
   function hendleCarDetails() {
     navigation.navigate("CarDetails");
   }
+
+  useEffect(() => {
+    async function fetchCars() {
+      try {
+        const response = await api.get("/cars");
+        setCars(response.data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchCars();
+  }, []);
 
   return (
     <Container>
@@ -36,13 +48,17 @@ export function Home() {
           <TotalCars>Total de 12 carros</TotalCars>
         </HeaderContent>
       </Header>
-      <CarList
-        data={[1, 2, 3, 4, 5, 6, 7, 8, 9]}
-        keyExtractor={(item) => String(item)}
-        renderItem={({ item }) => (
-          <Car data={carData} onPress={hendleCarDetails} />
-        )}
-      />
+      {loading ? (
+        <Load />
+      ) : (
+        <CarList
+          data={cars}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <Car data={item} onPress={hendleCarDetails} />
+          )}
+        />
+      )}
     </Container>
   );
 }
