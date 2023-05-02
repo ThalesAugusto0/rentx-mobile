@@ -6,10 +6,20 @@ import { Container, Title, Content, Message, Footer } from "./styles";
 import { ConfirmButton } from "../../components/ConfirmButton";
 import { useNavigation } from "@react-navigation/native";
 
+interface NavigationProps {
+  goBack: any;
+  navigate: (
+    screen: string
+    // carObject: {
+    //   car: CarDTO;
+    // }
+  ) => void;
+}
+
 export function SchedulingComplete() {
   const { width } = useWindowDimensions();
 
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProps>();
 
   function handleConfirm() {
     navigation.navigate("Home");

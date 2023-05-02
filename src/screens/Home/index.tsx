@@ -10,11 +10,20 @@ import { useNavigation } from "@react-navigation/native";
 import { CarDTO } from "../../dtos/CarDTO";
 import { Load } from "../../components/Load";
 
+interface NavigationProps {
+  navigate: (
+    screen: string
+    // carObject: {
+    //   car: CarDTO;
+    // }
+  ) => void;
+}
+
 export function Home() {
   const [cars, setCars] = useState<CarDTO[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProps>();
 
   function hendleCarDetails() {
     navigation.navigate("CarDetails");
