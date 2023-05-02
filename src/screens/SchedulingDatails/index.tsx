@@ -40,10 +40,20 @@ import {
 import { RFValue } from "react-native-responsive-fontsize";
 import { useNavigation } from "@react-navigation/native";
 
+interface NavigationProps {
+  goBack: any;
+  navigate: (
+    screen: string
+    // carObject: {
+    //   car: CarDTO;
+    // }
+  ) => void;
+}
+
 export function SchedulingDatails() {
   const theme = useTheme();
 
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProps>();
 
   function handleConfirmRental() {
     navigation.navigate("SchedulingComplete");

@@ -18,10 +18,20 @@ import {
 } from "./styles";
 import { useNavigation } from "@react-navigation/native";
 
+interface NavigationProps {
+  goBack: any;
+  navigate: (
+    screen: string
+    // carObject: {
+    //   car: CarDTO;
+    // }
+  ) => void;
+}
+
 export function Scheduling() {
   const theme = useTheme();
 
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProps>();
 
   function handleConfirmRental() {
     navigation.navigate("SchedulingDatails");

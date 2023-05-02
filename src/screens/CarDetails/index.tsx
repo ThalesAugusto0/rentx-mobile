@@ -28,16 +28,30 @@ import {
 } from "./styles";
 import { useNavigation } from "@react-navigation/native";
 
+interface NavigationProps {
+  goBack: any;
+  navigate: (
+    screen: string
+    // carObject: {
+    //   car: CarDTO;
+    // }
+  ) => void;
+}
+
 export function CarDetails() {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProps>();
 
   function handleConfirmRental() {
     navigation.navigate("Scheduling");
   }
+
+  function handleBack() {
+    navigation.goBack();
+  }
   return (
     <Container>
       <Header>
-        <BackButtton onPress={() => {}} />
+        <BackButtton onPress={handleBack} />
       </Header>
       <CarImages>
         <ImageSlider
