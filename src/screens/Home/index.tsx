@@ -12,10 +12,10 @@ import { Load } from "../../components/Load";
 
 interface NavigationProps {
   navigate: (
-    screen: string
-    // carObject: {
-    //   car: CarDTO;
-    // }
+    screen: string,
+    carObject: {
+      car: CarDTO;
+    }
   ) => void;
 }
 
@@ -25,8 +25,8 @@ export function Home() {
 
   const navigation = useNavigation<NavigationProps>();
 
-  function hendleCarDetails() {
-    navigation.navigate("CarDetails");
+  function hendleCarDetails(car: CarDTO) {
+    navigation.navigate("CarDetails", { car });
   }
 
   useEffect(() => {
@@ -64,7 +64,7 @@ export function Home() {
           data={cars}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <Car data={item} onPress={hendleCarDetails} />
+            <Car data={item} onPress={() => hendleCarDetails(item)} />
           )}
         />
       )}
