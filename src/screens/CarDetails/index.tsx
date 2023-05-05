@@ -30,10 +30,10 @@ interface Parms {
 interface NavigationProps {
   goBack: any;
   navigate: (
-    screen: string
-    // carObject: {
-    //   car: CarDTO;
-    // }
+    screen: string,
+    carObject: {
+      car: CarDTO;
+    }
   ) => void;
 }
 
@@ -43,7 +43,7 @@ export function CarDetails() {
   const { car } = route.params as Parms;
 
   function handleConfirmRental() {
-    navigation.navigate("Scheduling");
+    navigation.navigate("Scheduling", { car });
   }
 
   function handleBack() {
