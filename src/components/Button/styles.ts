@@ -6,7 +6,7 @@ interface ButtonTextProps {
   light: boolean;
 }
 
-interface ButtonProps extends RectButtonProps {
+interface ButtonProps {
   color: string;
 }
 
