@@ -2,6 +2,7 @@ import React from "react";
 import { StatusBar } from "react-native";
 import { Button } from "../../components/Button";
 import { Input } from "../../components/Input";
+import { PasswordInput } from "../../components/PasswordInput";
 import { Container, Header, Title, SubTitle, Form, Footer } from "./styles";
 import { useTheme } from "styled-components";
 
@@ -29,6 +30,12 @@ export function Signin() {
           placeholder="E-mail"
           keyboardType="email-address"
           autoCorrect={false}
+          autoCapitalize="none"
+        />
+
+        <PasswordInput
+          iconName="lock"
+          placeholder="Senha"
           autoCapitalize="none"
         />
       </Form>
