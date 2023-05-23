@@ -1,13 +1,8 @@
 import React, { useRef, useState } from "react";
 
-import {
-  Container,
-  ImageIndexes,
-  ImageIndex,
-  CarImageWrapper,
-  CarImage,
-} from "./styles";
+import { Container, ImageIndexes, CarImageWrapper, CarImage } from "./styles";
 import { FlatList, ViewToken } from "react-native";
+import { Bullet } from "../Bullet";
 
 interface Props {
   imagesUrls: string[];
@@ -22,7 +17,7 @@ export function ImageSlider({ imagesUrls }: Props) {
   const [imageIndex, setImageIndex] = useState(0);
 
   const indexChanged = useRef((info: ChangeImageProps) => {
-    const index = info.viewableItems[0].index!
+    const index = info.viewableItems[0].index!;
     setImageIndex(index);
   });
 
@@ -30,7 +25,7 @@ export function ImageSlider({ imagesUrls }: Props) {
     <Container>
       <ImageIndexes>
         {imagesUrls.map((_, index) => (
-          <ImageIndex key={String(index)} active={index == imageIndex} />
+          <Bullet key={String(index)} active={index == imageIndex} />
         ))}
       </ImageIndexes>
 
