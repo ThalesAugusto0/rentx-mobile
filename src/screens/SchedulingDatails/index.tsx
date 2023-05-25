@@ -91,16 +91,19 @@ export function SchedulingDatails() {
       ),
     });
 
-    api
-      .put(`/schedules_bycars/${car.id}`, {
-        id: car.id,
-        unavailable_dates,
-      })
-      .then(() => navigation.navigate("SchedulingComplete"))
-      .catch(() => {
-        setLoading(false);
-        Alert.alert("Não foi possível confirmar o agendamento");
+    api.put(`/schedules_bycars/${car.id}`, {
+      id: car.id,
+      unavailable_dates,
+    }).then(() => {
+      navigation.navigate("Confirmation", {
+        nextScreenRoute: "Home",
+        title: "Carro Alugado!",
+        message: `Agora você só precisa ir\naté a concessionária da RENTX\npegar o seu autóvel`,
       });
+    }).catch(() => {
+      setLoading(false);
+      Alert.alert("Não foi possível confirmar o agendamento");
+    });
   }
 
   function handleBack() {
