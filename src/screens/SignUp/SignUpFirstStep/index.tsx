@@ -3,7 +3,7 @@ import { BackButtton } from "../../../components/BackButtton";
 import { Bullet } from "../../../components/Bullet";
 import { Input } from "../../../components/Input";
 import { Button } from "../../../components/Button";
-import { useNavigation } from "@react-navigation/native";
+import { CommonActions, useNavigation } from "@react-navigation/native";
 import * as Yup from "yup";
 import {
   KeyboardAvoidingView,
@@ -44,7 +44,12 @@ export function SignUpFirstStep() {
       const data = { name, email, driverLicense };
       await schema.validate(data);
 
-      navigation.navigate("SignUpSecondStep", { user: data });
+      navigation.dispatch(
+        CommonActions.navigate({
+          name: "SignUpSecondStep",
+          params: { user: data },
+        })
+      );
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         return Alert.alert("Opa", error.message);

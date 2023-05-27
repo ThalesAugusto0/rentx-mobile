@@ -3,7 +3,11 @@ import { BackButtton } from "../../../components/BackButtton";
 import { Bullet } from "../../../components/Bullet";
 import { PasswordInput } from "../../../components/PasswordInput";
 import { Button } from "../../../components/Button";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import {
+  CommonActions,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
 import { useTheme } from "styled-components";
 import { Confirmation } from "../../Confirmation";
 import {
@@ -63,11 +67,16 @@ export function SignUpSecondStep() {
         password,
       })
       .then(() => {
-        navigation.navigate("Confirmation", {
-          nextScreenRoute: "Home",
-          title: "Conta Criada !",
-          message: `Agora é só fazer login\ne aproveitar.`,
-        });
+        navigation.dispatch(
+          CommonActions.navigate({
+            name: "Confirmation",
+            params: {
+              nextScreenRoute: "Home",
+              title: "Conta Criada !",
+              message: `Agora é só fazer login\ne aproveitar.`,
+            },
+          })
+        );
       })
       .catch(() => {
         Alert.alert("Opa", "Não foi possível cadastrar");
