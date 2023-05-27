@@ -5,7 +5,11 @@ import ArrowSvg from "../../assets/arrow.svg";
 import { StatusBar } from "react-native";
 import { Button } from "../../components/Button";
 import { format } from "date-fns";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import {
+  CommonActions,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
 import { getPlatformDate } from "../../utils/getPlatformDate";
 import { CarDTO } from "../../dtos/CarDTO";
 import {
@@ -25,17 +29,6 @@ import {
   Content,
   Footer,
 } from "./styles";
-
-interface NavigationProps {
-  goBack: any;
-  navigate: (
-    screen: string,
-    carObject: {
-      car: CarDTO;
-      dates: string[];
-    }
-  ) => void;
-}
 
 interface RentalPeriod {
   startFormatted: string;
@@ -57,16 +50,21 @@ export function Scheduling() {
   );
   const theme = useTheme();
 
-  const navigation = useNavigation<NavigationProps>();
+  const navigation = useNavigation();
 
   const route = useRoute();
   const { car } = route.params as Parms;
 
   function handleConfirmRental() {
-    navigation.navigate("SchedulingDatails", {
-      car,
-      dates: Object.keys(markedDates),
-    });
+    navigation.dispatch(
+      CommonActions.navigate({
+        name: "SchedulingDetails",
+        params: {
+          car,
+          dates: Object.keys(markedDates),
+        },
+      })
+    );
   }
 
   function handleBack() {
