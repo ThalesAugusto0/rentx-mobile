@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useNavigation } from "@react-navigation/core";
+import { CommonActions, useNavigation } from "@react-navigation/native";
 
 import BrandSvg from "../../assets/brand.svg";
 import LogoSvg from "../../assets/logo.svg";
@@ -53,7 +53,11 @@ export function Splash() {
   });
 
   function startApp() {
-    navigation.navigate("Home");
+    navigation.dispatch(
+      CommonActions.navigate({
+        name: "SignIn",
+      })
+    );
   }
 
   useEffect(() => {
