@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import * as Yup from "yup";
-import { useNavigation } from "@react-navigation/native";
+import { CommonActions, useNavigation } from "@react-navigation/native";
 import {
   StatusBar,
   KeyboardAvoidingView,
@@ -15,7 +15,7 @@ import { Container, Header, Title, SubTitle, Form, Footer } from "./styles";
 import { useTheme } from "styled-components";
 import { useAuth } from "../../hooks/auth";
 
-export function Signin() {
+export function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
@@ -48,7 +48,11 @@ export function Signin() {
   }
 
   function handleNewAccont() {
-    navigation.navigate("SignUpFirstStep");
+    navigation.dispatch(
+      CommonActions.navigate({
+        name: "SignUpFirstStep",
+      })
+    );
   }
 
   return (

@@ -11,7 +11,7 @@ import Animated, {
 import { StatusBar, StyleSheet, BackHandler } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import { Car } from "../../components/Car";
-import { useNavigation } from "@react-navigation/native";
+import { CommonActions, useNavigation } from "@react-navigation/native";
 import { CarDTO } from "../../dtos/CarDTO";
 import { LoadAnimation } from "../../components/LoadAnimation";
 import { Ionicons } from "@expo/vector-icons";
@@ -58,11 +58,20 @@ export function Home() {
   const navigation = useNavigation();
 
   function hendleCarDetails(car: CarDTO) {
-    navigation.navigate("CarDetails", { car });
+    navigation.dispatch(
+      CommonActions.navigate({
+        name: "CarDetails",
+        params: { car },
+      })
+    );
   }
 
   function hendleOpenMyCars() {
-    navigation.navigate("MyCars");
+    navigation.dispatch(
+      CommonActions.navigate({
+        name: "MyCars",
+      })
+    );
   }
 
   useEffect(() => {

@@ -6,7 +6,11 @@ import { Button } from "../../components/Button";
 import { Feather } from "@expo/vector-icons";
 import { useTheme } from "styled-components";
 import { RFValue } from "react-native-responsive-fontsize";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import {
+  CommonActions,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
 import { CarDTO } from "../../dtos/CarDTO";
 import { getAccessoryIcon } from "../../utils/getAccessoryIcon";
 
@@ -40,16 +44,6 @@ import { getPlatformDate } from "../../utils/getPlatformDate";
 import api from "../../service/api";
 import { Alert } from "react-native";
 
-interface NavigationProps {
-  goBack: any;
-  navigate: (
-    screen: string
-    // carObject: {
-    //   car: CarDTO;
-    // }
-  ) => void;
-}
-
 interface Params {
   car: CarDTO;
   dates: string;
@@ -60,19 +54,19 @@ interface RentalPeriod {
   end: string;
 }
 
-export function SchedulingDatails() {
+export function SchedulingDetails() {
   const [loading, setLoading] = useState(false);
   const [rentalPeriod, setRentalPeriod] = useState<RentalPeriod>(
     {} as RentalPeriod
   );
   const theme = useTheme();
 
-  const navigation = useNavigation<NavigationProps>();
+  const navigation = useNavigation();
 
   const route = useRoute();
   const { car, dates } = route.params as Params;
 
-  const rentTotal = Number(dates.length * car.rent.price);
+  const rentTotal = Number(dates.length * car.price);
 
   async function handleConfirmRental() {
     const schedulesByCar = await api.get(`/schedules_bycars/${car.id}`);
@@ -91,19 +85,27 @@ export function SchedulingDatails() {
       ),
     });
 
-    api.put(`/schedules_bycars/${car.id}`, {
-      id: car.id,
-      unavailable_dates,
-    }).then(() => {
-      navigation.navigate("Confirmation", {
-        nextScreenRoute: "Home",
-        title: "Carro Alugado!",
-        message: `Agora você só precisa ir\naté a concessionária da RENTX\npegar o seu autóvel`,
+    api
+      .put(`/schedules_bycars/${car.id}`, {
+        id: car.id,
+        unavailable_dates,
+      })
+      .then(() => {
+        navigation.dispatch(
+          CommonActions.navigate({
+            name: "Confirmation",
+            params: {
+              nextScreenRoute: "Home",
+              title: "Carro Alugado!",
+              message: `Agora você só precisa ir\naté a concessionária da RENTX\npegar o seu autóvel`,
+            },
+          })
+        );
+      })
+      .catch(() => {
+        setLoading(false);
+        Alert.alert("Não foi possível confirmar o agendamento");
       });
-    }).catch(() => {
-      setLoading(false);
-      Alert.alert("Não foi possível confirmar o agendamento");
-    });
   }
 
   function handleBack() {
@@ -134,8 +136,8 @@ export function SchedulingDatails() {
             <Name>{car.name}</Name>
           </Description>
           <Rent>
-            <Period>{car.rent.period}</Period>
-            <Price>R$ {car.rent.price}</Price>
+            <Period>{car.period}</Period>
+            <Price>R$ {car.price}</Price>
           </Rent>
         </Details>
 
@@ -175,7 +177,7 @@ export function SchedulingDatails() {
         <RentalPrice>
           <RentalPriceLabel>TOTAL</RentalPriceLabel>
           <RentalPriceDetails>
-            <RentalPriceQuota>{`R$ ${car.rent.price} x${dates.length} diárias`}</RentalPriceQuota>
+            <RentalPriceQuota>{`R$ ${car.price} x${dates.length} diárias`}</RentalPriceQuota>
             <RentalPriceTotal>R$ {rentTotal}</RentalPriceTotal>
           </RentalPriceDetails>
         </RentalPrice>
