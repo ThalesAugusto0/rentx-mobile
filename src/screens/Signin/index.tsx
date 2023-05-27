@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import * as Yup from "yup";
 import { useNavigation } from "@react-navigation/native";
 import {
   StatusBar,
@@ -7,18 +8,19 @@ import {
   Keyboard,
   Alert,
 } from "react-native";
-import * as Yup from "yup";
 import { Button } from "../../components/Button";
 import { Input } from "../../components/Input";
 import { PasswordInput } from "../../components/PasswordInput";
 import { Container, Header, Title, SubTitle, Form, Footer } from "./styles";
 import { useTheme } from "styled-components";
+import { useAuth } from "../../hooks/auth";
 
 export function Signin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
   const theme = useTheme();
+  const { signIn } = useAuth();
 
   async function handleSignIn() {
     try {
@@ -31,6 +33,8 @@ export function Signin() {
 
       await schema.validate({ email, password });
       Alert.alert("Tudo certo!");
+
+      signIn({ email, password });
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         Alert.alert("Ops", error.message);
